@@ -5,11 +5,19 @@
 #ifndef CPP_COURSEWORK_VOTE_H
 #define CPP_COURSEWORK_VOTE_H
 
+using namespace std;
+
+#include <vector>
+
 typedef unsigned int candidate;
 
 class vote {
-
+    public:
+        vote(vector<candidate>& prefs);
+        bool spent() const;
+        candidate first_preference() const;
+        void discard(candidate c);
+        vector<pair<candidate, int>>rankedcandidates() const;
 };
 
-
-#endif //UNTITLED1_VOTE_H
+#endif //CPP_COURSEWORK_VOTE_H
