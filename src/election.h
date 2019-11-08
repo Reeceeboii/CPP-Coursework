@@ -11,15 +11,17 @@
 class election {
     private:
         vector<vote> votes;
+        int candidate_count;
     public:
         election() = default;
         void add_vote(const vote& v);
         int vote_count() const;
+        int count_voters() const;
         void eliminate(candidate c);
         vector<pair<candidate, int>>ranked_candidates() const;
-        vector<vote> get_votes() const;
-        int get_votes_for_candidate(const candidate& c);
-        candidate get_round_winner() const;
+        int get_votes_for_candidate(const candidate& c) const;
+        void set_candidate_count(const int& count);
+        int get_candidate_count() const;
 };
 
 election read_votes(istream& in);
