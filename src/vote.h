@@ -12,6 +12,8 @@ using namespace std;
 typedef unsigned int candidate;
 
 class vote {
+    private:
+        vector<candidate> prefs;
     public:
         vote(vector<candidate>& prefs);
         bool spent() const;

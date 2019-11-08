@@ -3,3 +3,7 @@
 //
 
 #include "vote.h"
+
+
+vote::vote(vector <candidate> &prefs) : prefs(prefs){}
+

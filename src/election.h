@@ -9,6 +9,8 @@
 #include <istream>
 
 class election {
+    private:
+        vector<vote> votes;
     public:
         election() = default;
         void add_vote(const vote& v);
