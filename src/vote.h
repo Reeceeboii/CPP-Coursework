@@ -19,7 +19,8 @@ class vote {
         bool spent() const;
         candidate first_preference() const;
         void discard(candidate c);
-        vector<pair<candidate, int>>rankedcandidates() const;
+        vector<candidate> get_prefs() const;
+        void print_prefs() const;
 };
 
 #endif //CPP_COURSEWORK_VOTE_H

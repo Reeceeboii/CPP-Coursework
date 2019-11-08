@@ -15,6 +15,10 @@ int main(){
 
     election e = read_votes(infile);
 
+    bool winner = false;
+
+    cout << e.get_votes_for_candidate(4);
+
 
     return 0;
 }
