@@ -21,17 +21,19 @@ int main(){
         cout << "Round " << round << ": " << e.vote_count() << " votes" << endl;
         cout << "First preferences:" << endl;
 
-        for(int i = 0; i < ranked.size(); ++i){
-            if(ranked[i].second > highest){
-                highest = ranked[i].second;
-                cand = ranked[i].first;
+        // for every candidate, if their preference is the highest, set the flags equal to them
+        for(auto& i : ranked){
+            if(i.second > highest){
+                highest = i.second;
+                cand = i.first;
             }
-            cout << "  Candidate " << ranked[i].first << ": " << ranked[i].second << endl;
+            cout << "  Candidate " << i.first << ": " << i.second << endl;
         }
 
         if(highest > e.count_voters() / 2){
             winner = true;
         }else{
+            // eliminate the last ranked candidate
             cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << endl;
             //TODO something wrong with this elim function - fix this and you're done :)
             e.eliminate(ranked[ranked.size() - 1].first);

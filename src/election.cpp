@@ -14,11 +14,7 @@ void election::add_vote(const vote &v) {
 }
 
 int election::vote_count() const {
-    int total = 0;
-    for(const vote& v : votes){
-        total += v.get_prefs().size();
-    }
-    return total;
+    return votes.size();
 }
 
 int election::count_voters() const {
@@ -63,12 +59,17 @@ void election::set_candidate_count(const int &count) {
 int election::get_candidate_count() const { return candidate_count; }
 
 void election::eliminate(candidate c) {
-    for(vote v : votes){
-        auto r = remove_if(v.get_prefs().begin(), v.get_prefs().end(), [c](candidate& cand){ return cand == c;});
+    for(auto& v : votes){
+        for(auto p : v.get_prefs()){
+            cout << p;
+        }
     }
 }
 
 election read_votes(istream& in) {
+    if(!in){
+        cerr << "Error reading file: " << endl;
+    }
     election e;
     int highest_candidacy_val = 0;
     string line;
