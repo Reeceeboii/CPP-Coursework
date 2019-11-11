@@ -30,11 +30,11 @@ int main(){
             cout << "  Candidate " << i.first << ": " << i.second << endl;
         }
 
-        if(highest > e.count_voters() / 2){
+        if(highest >= e.count_voters() / 2){
             winner = true;
         }else{
             // eliminate the last ranked candidate
-            cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << endl;
+            cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << endl << endl;
             //TODO something wrong with this elim function - fix this and you're done :)
             e.eliminate(ranked[ranked.size() - 1].first);
             ++round;

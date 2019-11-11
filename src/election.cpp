@@ -26,10 +26,8 @@ int election::count_voters() const {
 int election::get_votes_for_candidate(const candidate &c) const {
     int total = 0;
     for(const vote& v : votes){
-        if(!v.spent()){
-            if(v.first_preference() == c){
-                ++total;
-            }
+        if(!v.spent() && v.first_preference() == c){
+            ++total;
         }
     }
     return total;
@@ -41,7 +39,9 @@ vector<pair<candidate, int>> election::ranked_candidates() const {
 
     // mapping candidate numbers
     for(int i = 1; i < get_candidate_count() + 1; ++i){
-        v.emplace_back(pair(i, get_votes_for_candidate(i)));
+        if(get_votes_for_candidate(i) > 0) {
+            v.emplace_back(pair(i, get_votes_for_candidate(i)));
+        }
     }
 
     // compare vote count of one pair to another pair and use that lambda as a predicate to std::sort
@@ -60,10 +60,9 @@ int election::get_candidate_count() const { return candidate_count; }
 
 void election::eliminate(candidate c) {
     for(auto& v : votes){
-        for(auto p : v.get_prefs()){
-            cout << p;
-        }
+        v.discard(c);
     }
+    votes.erase(remove_if(votes.begin(), votes.end(), [](const vote& v){ return v.spent();}), votes.end());
 }
 
 election read_votes(istream& in) {
