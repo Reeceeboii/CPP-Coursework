@@ -15,11 +15,10 @@ class vote {
     private:
         vector<candidate> prefs;
     public:
-        vote(vector<candidate>& prefs);
+        vote(const vector<candidate>& prefs);
         bool spent() const;
         candidate first_preference() const;
         void discard(candidate c);
-        vector<candidate> get_prefs() const;
         void print_prefs() const;
 };
 

@@ -6,21 +6,13 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 
-void election::add_vote(const vote &v) {
-    votes.push_back(v);
-}
+void election::add_vote(const vote &v) { votes.push_back(v); }
 
-int election::vote_count() const {
-    return votes.size();
-}
-
-int election::count_voters() const {
-    return votes.size();
-}
-
+int election::vote_count() const { return votes.size(); }
 
 // count the number of number 1 preferences for a particular candidate
 int election::get_votes_for_candidate(const candidate &c) const {
@@ -52,22 +44,22 @@ vector<pair<candidate, int>> election::ranked_candidates() const {
     return v;
 }
 
-void election::set_candidate_count(const int &count) {
-    candidate_count = count;
-}
+void election::set_candidate_count(const int &count) { candidate_count = count; }
 
 int election::get_candidate_count() const { return candidate_count; }
 
 void election::eliminate(candidate c) {
+    // remove c from votes
     for(auto& v : votes){
         v.discard(c);
     }
-    votes.erase(remove_if(votes.begin(), votes.end(), [](const vote& v){ return v.spent();}), votes.end());
+    // remove all spent votes from election
+    votes.erase(remove_if(votes.begin(), votes.end(), [](const vote& v){ return v.spent(); }), votes.end());
 }
 
 election read_votes(istream& in) {
     if(!in){
-        cerr << "Error reading file: " << endl;
+        cerr << "Error reading file: " << strerror(errno) <<endl;
     }
     election e;
     int highest_candidacy_val = 0;
