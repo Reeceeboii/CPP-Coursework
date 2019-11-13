@@ -10,7 +10,7 @@
 using namespace std;
 
 int main(){
-    fstream infile("votes.txt");
+    fstream infile("votes1.txt");
     election e = read_votes(infile);
 
     bool winner = false;

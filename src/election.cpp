@@ -7,6 +7,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <sstream>
 
 using namespace std;
 
@@ -66,13 +67,20 @@ election read_votes(istream& in) {
     string line;
     while(getline(in, line)){
         vector<candidate> preferences;
-        for(int c : line) {
-            if (c != ' ') {
-                // cheeky ascii conversion because simple cast just gives ascii value rather than value
-                int pref = c - '0';
+        stringstream ss ("");
+        for(char c : line) {
+            if (c == ' ') {
+                // ss currently contains str of candidate value
+                int pref = 0;
+                ss >> pref;
+
                 // the highest candidate number seen in the file can be assumed to be the total candidacy turnout
                 if(pref > highest_candidacy_val) highest_candidacy_val = pref;
                 preferences.push_back(pref);
+                ss = stringstream("");
+            }
+            else {
+                ss << c;
             }
         }
         e.add_vote(vote(preferences));
