@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 
@@ -62,29 +63,21 @@ election read_votes(istream& in) {
     if(!in){
         cerr << "Error reading file: " << strerror(errno) <<endl;
     }
+
     election e;
-    int highest_candidacy_val = 0;
+    int largest_cand = 0;
     string line;
+
     while(getline(in, line)){
         vector<candidate> preferences;
-        stringstream ss ("");
-        for(char c : line) {
-            if (c == ' ') {
-                // ss currently contains str of candidate value
-                int pref = 0;
-                ss >> pref;
-
-                // the highest candidate number seen in the file can be assumed to be the total candidacy turnout
-                if(pref > highest_candidacy_val) highest_candidacy_val = pref;
-                preferences.push_back(pref);
-                ss = stringstream("");
-            }
-            else {
-                ss << c;
-            }
+        stringstream ss(line);
+        int preference = 0;
+        while(ss >> preference){
+            if(preference > largest_cand) largest_cand = preference;
+            preferences.push_back(preference);
         }
         e.add_vote(vote(preferences));
     }
-    e.set_candidate_count(highest_candidacy_val);
+    e.set_candidate_count(largest_cand);
     return e;
 }
