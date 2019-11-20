@@ -5,9 +5,9 @@
 #ifndef CPP_COURSEWORK_VOTE_H
 #define CPP_COURSEWORK_VOTE_H
 
-using namespace std;
-
 #include <vector>
+
+using namespace std;
 
 typedef unsigned int candidate;
 
@@ -19,7 +19,6 @@ class vote {
         bool spent() const;
         candidate first_preference() const;
         void discard(candidate c);
-        void print_prefs() const;
 };
 
 #endif //CPP_COURSEWORK_VOTE_H

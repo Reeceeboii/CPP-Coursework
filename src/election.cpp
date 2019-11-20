@@ -42,7 +42,6 @@ vector<pair<candidate, int>> election::ranked_candidates() const {
     sort(v.begin(), v.end(), [](auto& candidate, auto& firsts){
         return candidate.second > firsts.second;
     });
-
     return v;
 }
 
@@ -65,13 +64,13 @@ election read_votes(istream& in) {
     }
 
     election e;
-    int largest_cand = 0;
+    candidate largest_cand = 0;
     string line;
 
     while(getline(in, line)){
         vector<candidate> preferences;
         stringstream ss(line);
-        int preference = 0;
+        candidate preference = 0;
         while(ss >> preference){
             if(preference > largest_cand) largest_cand = preference;
             preferences.push_back(preference);

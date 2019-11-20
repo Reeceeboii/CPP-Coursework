@@ -10,7 +10,7 @@
 using namespace std;
 
 int main(){
-    fstream infile("votes1.txt");
+    fstream infile("votes.txt");
     election e = read_votes(infile);
 
     bool winner = false;
@@ -18,8 +18,8 @@ int main(){
     int highest = 0, cand = 0;
     while(!winner){
         vector<pair<candidate, int>> ranked = e.ranked_candidates();
-        cout << "Round " << round << ": " << e.vote_count() << " votes" << endl;
-        cout << "First preferences:" << endl;
+        cout << "Round " << round << ": " << e.vote_count() << " votes" << "\n";
+        cout << "First preferences:" << "\n";
 
         // for every candidate, if their preference is the highest, set the flags equal to them
         for(auto& i : ranked){
@@ -27,22 +27,18 @@ int main(){
                 highest = i.second;
                 cand = i.first;
             }
-            cout << "  Candidate " << i.first << ": " << i.second << endl;
+            cout << "  Candidate " << i.first << ": " << i.second << "\n";
         }
 
         if(highest >= e.vote_count() / 2){
             winner = true;
         }else{
             // eliminate the last ranked candidate
-            cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << endl << endl;
+            cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << "\n\n";
             e.eliminate(ranked[ranked.size() - 1].first);
             ++round;
         }
     }
     cout << "Candidate " << cand << " is selected.";
-
-
-
-
     return 0;
 }

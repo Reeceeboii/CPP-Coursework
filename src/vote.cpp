@@ -4,7 +4,6 @@
 
 #include "vote.h"
 #include <algorithm>
-#include <iostream>
 
 vote::vote(const vector <candidate> &prefs) : prefs(prefs){}
 
@@ -17,10 +16,3 @@ void vote::discard(candidate c) {
 }
 
 bool vote::spent() const { return prefs.empty(); }
-
-void vote::print_prefs() const {
-    for (candidate c : prefs) {
-        cout << c;
-    }
-    cout << "\n";
-}
