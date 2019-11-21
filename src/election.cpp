@@ -17,14 +17,11 @@ void election::add_vote(const vote &v) { votes.push_back(v); }
 int election::vote_count() const { return votes.size(); }
 
 // count the number of number 1 preferences for a particular candidate
+// count if vote is not spent and the first preference is equal to c
 int election::get_votes_for_candidate(const candidate &c) const {
-    int total = 0;
-    for(const vote& v : votes){
-        if(!v.spent() && v.first_preference() == c){
-            ++total;
-        }
-    }
-    return total;
+    return count_if(votes.begin(), votes.end(), [c](const vote& v){
+        return v.spent() ? false : v.first_preference() == c;
+    });
 }
 
 
