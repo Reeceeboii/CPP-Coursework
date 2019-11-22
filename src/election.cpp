@@ -30,8 +30,9 @@ vector<pair<candidate, int>> election::ranked_candidates() const {
 
     // mapping candidate numbers
     for(int i = 1; i < get_candidate_count() + 1; ++i){
-        if(get_votes_for_candidate(i) > 0) {
-            v.emplace_back(pair(i, get_votes_for_candidate(i)));
+        int count = get_votes_for_candidate(i);
+        if(count > 0) {
+            v.emplace_back(pair(i, count));
         }
     }
 
