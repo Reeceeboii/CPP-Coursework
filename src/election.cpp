@@ -6,8 +6,6 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include <cstdlib>
-#include <cstring>
 #include <sstream>
 
 using namespace std;
@@ -57,10 +55,6 @@ void election::eliminate(candidate c) {
 }
 
 election read_votes(istream& in) {
-    if(!in){
-        cerr << "Error reading file: " << strerror(errno) <<endl;
-    }
-
     election e;
     candidate largest_cand = 0;
     string line;
@@ -69,11 +63,13 @@ election read_votes(istream& in) {
         vector<candidate> preferences;
         stringstream ss(line);
         candidate preference = 0;
-        while(ss >> preference){
-            if(preference > largest_cand) largest_cand = preference;
-            preferences.push_back(preference);
+        if(line.length()){ // check for blank lines just in case
+            while (ss >> preference) {
+                if (preference > largest_cand) largest_cand = preference;
+                preferences.push_back(preference);
+            }
+            e.add_vote(vote(preferences));
         }
-        e.add_vote(vote(preferences));
     }
     e.set_candidate_count(largest_cand);
     return e;

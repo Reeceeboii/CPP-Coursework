@@ -17,6 +17,10 @@ int main(){
     int round = 1;
     int highest = 0, cand = 0;
     while(!winner){
+        if(!e.vote_count()){
+            cout << "There are no votes left.";
+            return 0;
+        }
         vector<pair<candidate, int>> ranked = e.ranked_candidates();
         cout << "Round " << round << ": " << e.vote_count() << " votes" << "\n";
         cout << "First preferences:" << "\n";
