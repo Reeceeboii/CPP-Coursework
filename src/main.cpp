@@ -2,20 +2,21 @@
 // Created by reece on 08/11/2019.
 //
 
-#include <iostream>
-#include <fstream>
 #include "vote.h"
 #include "election.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
 int main(){
     fstream infile("votes.txt");
-    election e = read_votes(infile);
 
+    election e = read_votes(infile);
     bool winner = false;
     int round = 1;
-    int highest = 0, cand = 0;
+    candidate current_highest_cand = 0;
+
     while(!winner){
         if(!e.vote_count()){
             cout << "There are no votes left.";
@@ -25,24 +26,20 @@ int main(){
         cout << "Round " << round << ": " << e.vote_count() << " votes" << "\n";
         cout << "First preferences:" << "\n";
 
-        // for every candidate, if their preference is the highest, set the flags equal to them
-        for(auto& i : ranked){
-            if(i.second > highest){
-                highest = i.second;
-                cand = i.first;
-            }
-            cout << "  Candidate " << i.first << ": " << i.second << "\n";
+        current_highest_cand = ranked.front().first;
+        for(auto& p : ranked){
+            cout << "  Candidate " << p.first << ": " << p.second << "\n";
         }
 
-        if(highest >= e.vote_count() / 2){
+        if(ranked.front().second > e.vote_count() / 2){
             winner = true;
         }else{
             // eliminate the last ranked candidate
-            cout << "Candidate " << ranked[ranked.size() - 1].first << " is eliminated." << "\n\n";
-            e.eliminate(ranked[ranked.size() - 1].first);
+            cout << "Candidate " << ranked.back().first << " is eliminated." << "\n\n";
+            e.eliminate(ranked.back().first);
             ++round;
         }
     }
-    cout << "Candidate " << cand << " is selected.";
+    cout << "Candidate " << current_highest_cand << " is selected.";
     return 0;
 }

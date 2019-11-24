@@ -12,7 +12,6 @@ using namespace std;
 typedef unsigned int candidate;
 
 class vote {
-    private:
         vector<candidate> prefs;
     public:
         vote(const vector<candidate>& prefs);
