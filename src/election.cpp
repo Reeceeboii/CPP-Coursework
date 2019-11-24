@@ -16,9 +16,11 @@ int election::vote_count() const { return votes.size(); }
 
 vector<pair<candidate, int>> election::ranked_candidates() const {
     map<candidate, int> map;
-    for(auto& v : votes){
-        auto it = map.find(v.first_preference());
-        it != map.end() ? ++it->second : map[v.first_preference()] = 1;
+    for(auto& v : votes) {
+        if (!v.spent()) {
+            auto it = map.find(v.first_preference());
+            it != map.end() ? ++it->second : map[v.first_preference()] = 1;
+        }
     }
 
     vector<pair<candidate, int>> vec(map.cbegin(), map.cend());
